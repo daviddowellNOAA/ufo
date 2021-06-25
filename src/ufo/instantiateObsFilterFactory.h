@@ -30,6 +30,7 @@
 #include "ufo/filters/ObsDomainErrCheck.h"
 #include "ufo/filters/PerformAction.h"
 #include "ufo/filters/PoissonDiskThinning.h"
+#include "ufo/filters/PracticalBoundsCheck.h"
 #include "ufo/filters/PreQC.h"
 #include "ufo/filters/ProfileBackgroundCheck.h"
 #include "ufo/filters/ProfileConsistencyChecks.h"
@@ -53,6 +54,8 @@
 namespace ufo {
 template<typename OBS> void instantiateObsFilterFactory() {
   oops::instantiateObsFilterFactory<OBS>();
+  static oops::FilterMaker<OBS, oops::ObsFilter<OBS, ufo::PracticalBoundsCheck> >
+           practicalBoundsCheckMaker("Practical Bounds Check");
   static oops::FilterMaker<OBS, oops::ObsFilter<OBS, ufo::QCmanager> >
            qcManagerMaker("QCmanager");
   static oops::FilterMaker<OBS, oops::ObsFilter<OBS, ufo::PreQC> >
